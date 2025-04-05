@@ -1,11 +1,12 @@
 package com.jpacourse.persistance.entity;
 
-import com.jpacourse.persistance.enums.Specialization;
-
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-@Table(name = "DOCTOR")
+@Table(name = "doctor")
 public class DoctorEntity {
 
 	@Id
@@ -21,14 +22,30 @@ public class DoctorEntity {
 	@Column(nullable = false)
 	private String telephoneNumber;
 
+	@Column(nullable = false)
 	private String email;
 
 	@Column(nullable = false)
 	private String doctorNumber;
 
 	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private Specialization specialization;
+	private String specialization;
+
+	// ============ RELACJE ============
+
+	// Dwustronna relacja (rodzic) – Doctor ma listę wizyt
+	@OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+	// Komentarz: Relacja dwustronna od strony rodzica (Doctor).
+	// "VisitEntity" przechowuje klucz obcy doctor_id, stąd mappedBy="doctor".
+	private List<VisitEntity> visits = new ArrayList<>();
+
+	// ============ KONSTRUKTORY ============
+
+	// Domyślny konstruktor wymagany przez JPA
+	public DoctorEntity() {
+	}
+
+	// ============ GETTERY I SETTERY ============
 
 	public Long getId() {
 		return id;
@@ -78,12 +95,19 @@ public class DoctorEntity {
 		this.doctorNumber = doctorNumber;
 	}
 
-	public Specialization getSpecialization() {
+	public String getSpecialization() {
 		return specialization;
 	}
 
-	public void setSpecialization(Specialization specialization) {
+	public void setSpecialization(String specialization) {
 		this.specialization = specialization;
 	}
 
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
 }

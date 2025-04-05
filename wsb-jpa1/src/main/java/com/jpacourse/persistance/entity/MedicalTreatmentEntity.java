@@ -1,11 +1,9 @@
 package com.jpacourse.persistance.entity;
 
-import com.jpacourse.persistance.enums.TreatmentType;
-
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "MEDICAL_TREATMENT")
+@Table(name = "medical_treatment")
 public class MedicalTreatmentEntity {
 
 	@Id
@@ -15,31 +13,16 @@ public class MedicalTreatmentEntity {
 	@Column(nullable = false)
 	private String description;
 
-	@Enumerated(EnumType.STRING)
-	private TreatmentType type;
+	@Column(nullable = false)
+	private String type;
+
+	// Brak pola 'visit' – to relacja jednostronna zdefiniowana w VisitEntity
+
+	// ============ GETTERY I SETTERY ============
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public TreatmentType getType() {
-		return type;
-	}
-
-	public void setType(TreatmentType type) {
-		this.type = type;
-	}
-
+	// ... pozostałe get/set
 }
