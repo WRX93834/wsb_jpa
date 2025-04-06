@@ -16,13 +16,25 @@ public class MedicalTreatmentEntity {
 	@Column(nullable = false)
 	private String type;
 
-	// Brak pola 'visit' – to relacja jednostronna zdefiniowana w VisitEntity
-
-	// ============ GETTERY I SETTERY ============
-
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	// ... pozostałe get/set
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 }

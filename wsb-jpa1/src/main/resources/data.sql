@@ -1,36 +1,41 @@
--- Opcjonalnie: Jeśli nie potrzebujesz tego rekordu, możesz go usunąć
-INSERT INTO address (id, address_line1, address_line2, city, postal_code)
-VALUES (901, 'xx', 'yy', 'city', '60-400');
+-- Insert doktorów
+INSERT INTO doctor (first_name, last_name, telephone_number, email, doctor_number, specialization)
+VALUES
+    ('Adam', 'Mickiewicz', '111222333', 'adam@example.com', 'D001', 'GP'),
+    ('Ewa', 'Nowak', '222333444', 'ewa.nowak@example.com', 'D002', 'SURGEON'),
+    ('Jan', 'Kowalski', '333444555', 'jan.kowalski@example.com', 'D003', 'DERMATOLOGIST'),
+    ('Anna', 'Zielińska', '444555666', 'anna.zielinska@example.com', 'D004', 'OCULIST');
 
--- 1. Wstawianie rekordów do tabeli "address"
--- Adresy muszą istnieć, bo pacjent odwołuje się do adresu
-INSERT INTO address (id, city, address_line1, address_line2, postal_code)
-VALUES (1, 'Warszawa', 'Ul. Miodowa 1', 'Apt 101', '00-001');
+-- Insert adresów
+INSERT INTO address (city, address_line1, postal_code)
+VALUES
+    ('Warszawa', 'ul. Testowa 1', '00-001'),
+    ('Kraków', 'ul. Królewska 10', '30-001'),
+    ('Gdańsk', 'ul. Morska 5', '80-001'),
+    ('Wrocław', 'ul. Piękna 2', '50-001');
 
-INSERT INTO address (id, city, address_line1, address_line2, postal_code)
-VALUES (2, 'Kraków', 'Ul. Krucza 15', NULL, '30-001');
+-- Insert pacjentów (przyjmujemy, że identyfikatory adresów to 1,2,3,4)
+INSERT INTO patient (first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id)
+VALUES
+    ('Maria', 'Skłodowska', '444555666', 'maria@example.com', 'P004', '1995-03-15', 1),
+    ('Piotr', 'Nowak', '555666777', 'piotr.nowak@example.com', 'P005', '1985-07-20', 2),
+    ('Katarzyna', 'Kowalska', '666777888', 'katarzyna.kowalska@example.com', 'P006', '1978-11-30', 3),
+    ('Tomasz', 'Zieliński', '777888999', 'tomasz.zielinski@example.com', 'P007', '1990-03-05', 4);
 
--- 2. Wstawianie rekordów do tabeli "doctor"
-INSERT INTO doctor (id, first_name, last_name, telephone_number, email, doctor_number, specialization)
-VALUES (1, 'Jan', 'Nowak', '123456789', 'jan.nowak@example.com', 'D001', 'CARDIOLOGY');
+-- Insert wizyt (zakładamy, że ID doktorów: 1-4 oraz pacjentów: 1-4)
+INSERT INTO visit (description, time, doctor_id, patient_id)
+VALUES
+    ('Konsultacja', CURRENT_TIMESTAMP, 1, 1),
+    ('Kontrola stanu zdrowia', CURRENT_TIMESTAMP, 2, 2),
+    ('Badanie dermatologiczne', CURRENT_TIMESTAMP, 3, 3),
+    ('Wizyta okulistyczna', CURRENT_TIMESTAMP, 4, 4),
+    ('Szybka konsultacja', CURRENT_TIMESTAMP, 1, 2);
 
--- 3. Wstawianie rekordów do tabeli "patient"
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id)
-VALUES (1, 'Anna', 'Kowalska', '987654321', 'anna.kowalska@example.com', 'P001', '1980-05-10', 1);
-
-INSERT INTO patient (id, first_name, last_name, telephone_number, email, patient_number, date_of_birth, address_id)
-VALUES (2, 'Piotr', 'Zieliński', '1122334455', 'piotr.zielinski@example.com', 'P002', '1975-03-15', 2);
-
--- 4. Wstawianie rekordów do tabeli "visit"
-INSERT INTO visit (id, description, time, doctor_id, patient_id)
-VALUES (1, 'Regular checkup', '2025-04-01 10:00:00', 1, 1);
-
-INSERT INTO visit (id, description, time, doctor_id, patient_id)
-VALUES (2, 'Follow-up visit', '2025-04-02 11:30:00', 1, 2);
-
--- 5. Wstawianie rekordów do tabeli "medical_treatment"
-INSERT INTO medical_treatment (id, description, type, visit_id)
-VALUES (1, 'Angioplasty procedure', 'SURGERY', 1);
-
-INSERT INTO medical_treatment (id, description, type, visit_id)
-VALUES (2, 'Routine blood test', 'DIAGNOSTIC', 2);
+-- Opcjonalnie: Insert zabiegów (medical_treatment)
+INSERT INTO medical_treatment (visit_id, description, type)
+VALUES
+    (1, 'USG jamy brzusznej', 'USG'),
+    (2, 'EKG spoczynkowe', 'EKG'),
+    (3, 'RTG klatki piersiowej', 'RTG'),
+    (4, 'Badanie wzroku', 'RTG'),
+    (5, 'USG tarczycy', 'USG');

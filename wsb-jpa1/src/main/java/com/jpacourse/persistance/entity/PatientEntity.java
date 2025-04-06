@@ -1,7 +1,6 @@
 package com.jpacourse.persistance.entity;
 
 import jakarta.persistence.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,25 +30,76 @@ public class PatientEntity {
 
 	private LocalDate dateOfBirth;
 
-	// ============ RELACJE ============
-
-	// Dwustronna relacja (rodzic) – Patient ma listę wizyt
+	// Dwustronna relacja – Patient ma listę wizyt
 	@OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-	// Komentarz: Relacja dwustronna od strony rodzica (Patient).
-	// "VisitEntity" przechowuje klucz obcy patient_id, stąd mappedBy="patient".
 	private List<VisitEntity> visits = new ArrayList<>();
 
-	// Jednostronna relacja (dziecko) – Patient posiada Address
+	// Jednostronna relacja – Patient posiada Address
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "address_id", nullable = false)
-	// Komentarz: Relacja jednostronna od strony dziecka (Patient) – w tabeli "patient" jest klucz obcy "address_id".
 	private AddressEntity address;
 
-	// ============ GETTERY I SETTERY ============
-
+	// Gettery i settery
 	public Long getId() {
 		return id;
 	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	// ... pozostałe get/set
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getTelephoneNumber() {
+		return telephoneNumber;
+	}
+	public void setTelephoneNumber(String telephoneNumber) {
+		this.telephoneNumber = telephoneNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPatientNumber() {
+		return patientNumber;
+	}
+	public void setPatientNumber(String patientNumber) {
+		this.patientNumber = patientNumber;
+	}
+
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth;
+	}
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public List<VisitEntity> getVisits() {
+		return visits;
+	}
+	public void setVisits(List<VisitEntity> visits) {
+		this.visits = visits;
+	}
+
+	public AddressEntity getAddress() {
+		return address;
+	}
+	public void setAddress(AddressEntity address) {
+		this.address = address;
+	}
 }
